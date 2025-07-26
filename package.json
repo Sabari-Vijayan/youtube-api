@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "YouTube transcript extraction API",
   "main": "api/transcript.js",
- {
   "type": "module",
   "dependencies": {
     "youtube-transcript-api": "^0.0.11"
-  }
-},
+  },
   "scripts": {
     "dev": "vercel dev",
     "deploy": "vercel --prod"
