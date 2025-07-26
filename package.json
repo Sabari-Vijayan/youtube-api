@@ -2,10 +2,10 @@
   "name": "youtube-transcript-api",
   "version": "1.0.0",
   "description": "YouTube transcript extraction API",
-  "main": "api/transcript.js",
   "type": "module",
+  "main": "api/getTranscript.js",
   "dependencies": {
-    "youtube-transcript-api": "^0.0.11"
+    "youtube-transcript-api": "^0.0.3"
   },
   "scripts": {
     "dev": "vercel dev",
