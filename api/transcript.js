@@ -1,20 +1,14 @@
-import TranscriptClient from 'youtube-transcript-api';
-
-const client = new TranscriptClient();
+import chrome from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core';
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
-  }
-
-  const { videoId, language = 'en' } = req.body;
-
-  try {
-    await client.ready;
-    const transcript = await client.getTranscript(videoId, { languages: [language] });
-    res.status(200).json({ success: true, transcript });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+  const { videoId } = req.body;
+  const browser = await puppeteer.launch({ args: chrome.args, executablePath: await chrome.executablePath });
+  const page = await browser.newPage();
+  await page.goto(`https://www.youtube.com/watch?v=${videoId}`);
+  await page.click('button[aria-label="More actions"]');
+  await page.click('ytd-menu-service-item-renderer yt-formatted-string:contains("Open transcript")');
+  // scrape from page ...
+  await browser.close();
+  res.json({ transcript });
 }
